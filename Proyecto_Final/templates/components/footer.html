@@ -1,0 +1,65 @@
+<footer class="footer mt-auto py-5">
+    <div class="container">
+        <div class="row gy-4 align-items-center">
+            <!-- Columna de Marca -->
+            <div class="col-12 col-md-4 text-center text-md-start">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-2">
+                    <div style="background-color: var(--pastel-indigo-light); color: var(--pastel-indigo); padding: 0.5rem; border-radius: 12px; margin-right: 0.8rem;">
+                        <i class="bi bi-tools fs-5"></i>
+                    </div>
+                    <h5 class="mb-0 fw-bold" style="color: var(--text-heading); letter-spacing: -0.5px;">{{ sistema.empresa }}</h5>
+                </div>
+                <p class="text-muted small mb-0 pe-md-4">
+                    Su tienda de confianza para materiales de construcción y ferretería pesada.
+                </p>
+            </div>
+
+            <!-- Columna de Contacto -->
+            <div class="col-12 col-md-4 text-center">
+                <div class="d-flex flex-column gap-2 small text-muted">
+                    <span>
+                        <i class="bi bi-geo-alt me-1" style="color: var(--pastel-rose);"></i> 
+                        {{ sistema.sucursal_principal }}
+                    </span>
+                    <span>
+                        <i class="bi bi-telephone me-1" style="color: var(--pastel-mint);"></i> 
+                        {{ sistema.telefono_contacto }}
+                    </span>
+                    <span>
+                        <i class="bi bi-envelope me-1" style="color: var(--pastel-sky);"></i> 
+                        {{ sistema.email_contacto }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Columna Académica / Desarrollo -->
+            <div class="col-12 col-md-4 text-center text-md-end">
+                <div class="p-3 rounded-3" style="background-color: var(--bg-canvas); border: 1px solid var(--border-light);">
+                    <div class="fw-semibold text-body mb-1" style="font-size: 0.9rem;">{{ sistema.desarrollador }}</div>
+                    <div class="text-muted mb-1" style="font-size: 0.8rem;">
+                        {{ sistema.asignatura }} ({{ sistema.periodo }})
+                    </div>
+                    <span class="badge" style="background-color: var(--pastel-lavender-light); color: var(--pastel-lavender-text); border: 1px solid var(--pastel-lavender-border);">
+                        Proyecto Final
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <hr class="mt-5 mb-4" style="border-color: var(--border-soft); opacity: 1;">
+
+        <!-- Copyright -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-muted" style="font-size: 0.85rem;">
+            <div>
+                &copy; 2026 <strong>{{ sistema.empresa }}</strong>. Todos los derechos reservados.
+            </div>
+            <div class="mt-2 mt-md-0 d-flex gap-3">
+                <span>Flask</span>
+                <span style="color: var(--border-soft);">|</span>
+                <span>Flask-WTF</span>
+                <span style="color: var(--border-soft);">|</span>
+                <span>MySQL</span>
+            </div>
+        </div>
+    </div>
+</footer>
