@@ -1,0 +1,320 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[top=2.8cm,bottom=2.8cm,left=2.2cm,right=2.2cm]{geometry}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{multirow}
+
+% Colores institucionales y estilo profesional
+\definecolor{ueanavy}{RGB}{31, 56, 100}
+\definecolor{ueagreen}{RGB}{46, 117, 89}
+\definecolor{lightgray}{RGB}{245, 247, 250}
+\definecolor{boxborder}{RGB}{200, 215, 230}
+\definecolor{codebg}{RGB}{248, 249, 250}
+\definecolor{alertbg}{RGB}{254, 243, 199}
+\definecolor{alertborder}{RGB}{245, 158, 11}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ueanavy,
+    urlcolor=ueanavy,
+    citecolor=ueanavy
+}
+
+% Encabezados y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small \textbf{UEA} | Tecnologías de la Información}
+\fancyhead[R]{\small Defensa Proyecto Final: Desarrollo de Aplicaciones Web}
+\fancyfoot[L]{\small Clara Anahí González Apolo}
+\fancyfoot[R]{\small Página \thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% Comando para placeholder visual de captura si no existe la imagen
+\newcommand{\screenshotbox}[3]{
+    \begin{figure}[htbp]
+        \centering
+        \IfFileExists{#1}{
+            \includegraphics[width=0.92\textwidth]{#1}
+        }{
+            \begin{tcolorbox}[colback=lightgray,colframe=boxborder,arc=4mm,width=0.92\textwidth,halign=center]
+                \vspace{0.4cm}
+                {\color{ueanavy}\Large\textbf{[ CAPTURA: #2 ]}}\\[1.5ex]
+                {\small\textbf{Archivo sugerido:} \texttt{\detokenize{#1}}}\\[1ex]
+                \textit{#3}
+                \vspace{0.4cm}
+            \end{tcolorbox}
+        }
+        \caption{#2: #3}
+    \end{figure}
+}
+
+% Configuración de listados de código
+\lstset{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{boxborder},
+    keywordstyle=\color{ueanavy}\bfseries,
+    stringstyle=\color{ueagreen},
+    commentstyle=\color{gray}\itshape,
+    numbers=none
+}
+
+\begin{document}
+
+% ==============================================================================
+% PORTADA INSTITUCIONAL
+% ==============================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    {\large \textbf{UNIVERSIDAD ESTATAL AMAZÓNICA}}\\[0.8ex]
+    {\large \textbf{FACULTAD DE RECURSOS NATURALES}}\\[0.8ex]
+    {\normalsize \textbf{CARRERA DE TECNOLOGÍAS DE LA INFORMACIÓN}}\\[2.5cm]
+
+    \begin{tcolorbox}[colback=white,colframe=ueanavy,arc=3mm,width=0.95\textwidth,halign=center]
+        \vspace{0.3cm}
+        {\Large \textbf{\color{ueanavy}DOCUMENTO Y GUÍA DE DEFENSA PRÁCTICA}}\\[1.5ex]
+        {\large \textbf{PROYECTO INTEGRADOR U4 (AVANCE FINAL 16/16)}}\\[2ex]
+        {\large \textbf{Sistema Web de Gestión Comercial con Autenticación,\\ Operaciones CRUD y Base de Datos Relacional PostgreSQL}}\\[1ex]
+        {\textit{Caso de Estudio: Ferretería ``El Tornillo Dorado''}}
+        \vspace{0.3cm}
+    \end{tcolorbox}
+
+    \vspace{2.5cm}
+
+    \begin{flushleft}
+        \begin{tabular}{ll}
+            \textbf{Asignatura:} & Desarrollo de Aplicaciones Web (2626-UEA-L-UFPTI-004-D) \\
+            \textbf{Docente:} & Ing. Walter Nuñez, Msc. \\
+            \textbf{Estudiante:} & Clara Anahí González Apolo \\
+            \textbf{Período:} & 2626 -- Semestre Académico \\
+            \textbf{Fecha de Entrega:} & Octubre de 2026 \\
+            \textbf{Repositorio Oficial:} & \url{https://github.com/anis1605/2626---DESARROLLO-DE-APLICACIONES-WEB----UEA-L-UFPTI-004} \\
+            \textbf{GitHub Pages:} & \url{https://anis1605.github.io/2626---DESARROLLO-DE-APLICACIONES-WEB----UEA-L-UFPTI-004/}
+        \end{tabular}
+    \end{flushleft}
+
+    \vfill
+    {\small Puyo -- Pastaza -- Ecuador}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% SECCIÓN 1: INTRODUCCIÓN Y FICHA TÉCNICA
+% ==============================================================================
+\section{Ficha Técnica y Objetivos del Proyecto}
+
+El presente proyecto integrador representa la consolidación práctica de la asignatura \textbf{Desarrollo de Aplicaciones Web}. El sistema implementa una arquitectura completa basada en el microframework Flask, integrando persistencia relacional con PostgreSQL, autenticación robusta mediante Flask-Login y cifrado criptográfico Werkzeug, operaciones completas de creación, lectura, modificación y eliminación (CRUD), y un frontend moderno con Bootstrap 5 bajo una paleta pastel y tipografía Plus Jakarta Sans.
+
+\subsection{Especificaciones Técnicas}
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Lenguaje de Programación:} Python 3.12.
+    \item \textbf{Framework Web Backend:} Flask 3.1.3 con arquitectura modular MVC.
+    \item \textbf{Gestión de Autenticación:} Flask-Login 0.6.3 (\texttt{UserMixin}, \texttt{LoginManager}, \texttt{login\_required}).
+    \item \textbf{Seguridad y Hashing de Contraseñas:} Werkzeug 3.1.8 (Algoritmo \texttt{scrypt}).
+    \item \textbf{Formularios y Protección CSRF:} Flask-WTF 1.3.0 y WTForms 3.2.2.
+    \item \textbf{Motor de Base de Datos:} PostgreSQL 15+ con conector \texttt{psycopg2-binary} 2.9.9.
+    \item \textbf{Servidor WSGI de Producción:} Gunicorn 21.2.0 (configurado en \texttt{Procfile}).
+    \item \textbf{Control de Versiones y Despliegue:} Git, GitHub (\texttt{anis1605}) y Render.
+\end{itemize}
+
+\subsection{Estructura del Repositorio}
+A diferencia de versiones preliminares, el proyecto final se encuentra desplegado directamente en la \textbf{raíz del repositorio} para garantizar su ejecución inmediata y compatibilidad directa con Render:
+\begin{lstlisting}
+Proyecto_Final/
+|-- app.py                     # Controlador Flask, endpoints y rutas protegidas
+|-- models.py                  # Modelo Usuario con UserMixin y metodos SQL
+|-- requirements.txt           # Dependencias completas del entorno
+|-- Procfile                   # Configuracion de despliegue: web: gunicorn app:app
+|-- conexion/conexion.py       # Conector psycopg2 con soporte local y nube (Render)
+|-- sql/esquema.sql            # DDL de PostgreSQL: 5 tablas relacionadas y datos demo
+|-- forms/                     # Formularios WTForms (Login, Usuario, Producto, Cliente...)
+|-- templates/                 # Vistas Jinja2 (base.html, dashboard, login, modulos CRUD)
+`-- static/                    # Hojas de estilo pastel, JavaScript y recursos graficos
+\end{lstlisting}
+
+% ==============================================================================
+% SECCIÓN 2: ARQUITECTURA DE BASE DE DATOS Y RELACIONES
+% ==============================================================================
+\section{Modelo Relacional de Base de Datos (PostgreSQL)}
+
+La base de datos relacional \textbf{\texttt{ferreteria\_db}} fue diseñada para soportar un flujo comercial integral y cumple con el requisito obligatorio de incorporar \textbf{al menos 3 tablas relacionadas} mediante claves primarias (\texttt{PRIMARY KEY}) y foráneas (\texttt{FOREIGN KEY}), alcanzando un total de 5 tablas:
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{\texttt{usuarios}:} Almacena las cuentas de acceso con su identificador primario (\texttt{id SERIAL}), usuario único (\texttt{usuario VARCHAR(50) UNIQUE}), contraseña cifrada en hash (\texttt{password VARCHAR(255)}) y rol.
+    \item \textbf{\texttt{proveedores}:} Entidad fuerte identificada por su RUC (\texttt{ruc VARCHAR(13) PRIMARY KEY}), razón social, categoría comercial, contacto y teléfono.
+    \item \textbf{\texttt{productos}:} Registra los ítems del catálogo. Incorpora la clave foránea \texttt{proveedor\_ruc} que referencia a \texttt{proveedores(ruc)} mediante integridad referencial (\texttt{ON DELETE SET NULL ON UPDATE CASCADE}).
+    \item \textbf{\texttt{clientes}:} Directorio de compradores registrados por su RUC o Cédula (\texttt{ruc VARCHAR(13) PRIMARY KEY}), tipo, teléfono, correo y dirección.
+    \item \textbf{\texttt{facturas}:} Documentos de venta con clave foránea \texttt{cliente\_ruc} asociada a \texttt{clientes(ruc)}, registrando fecha, subtotal, IVA (15\%) y total.
+\end{enumerate}
+
+\subsection{Consulta Multi-Tabla con JOIN Implementada}
+Para evidenciar el aprovechamiento de las relaciones foráneas, en el listado de productos se ejecuta la siguiente consulta parametrizada con \texttt{LEFT JOIN}:
+\begin{lstlisting}[language=SQL]
+SELECT p.id, p.nombre, p.categoria, p.unidad, p.stock, p.precio, 
+       p.proveedor_ruc, pr.empresa AS proveedor_empresa
+FROM productos p
+LEFT JOIN proveedores pr ON p.proveedor_ruc = pr.ruc
+ORDER BY p.nombre ASC;
+\end{lstlisting}
+
+\screenshotbox{captura_01_tablas_bd.png}{Captura 1}{Estructura de las 5 tablas y claves foráneas en PostgreSQL visualizadas desde DBeaver o consola psql.}
+
+\screenshotbox{captura_02_consulta_join.png}{Captura 2}{Ejecución y resultado de la consulta SQL con JOIN mostrando la relación entre productos y proveedores.}
+
+% ==============================================================================
+% SECCIÓN 3: SISTEMA DE AUTENTICACIÓN Y SEGURIDAD
+% ==============================================================================
+\section{Módulo de Autenticación y Control de Acceso (Semana 14)}
+
+El sistema garantiza un entorno seguro mediante el uso de estándares de la industria:
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Cifrado Criptográfico Irreversible:} Las contraseñas jamás se almacenan en texto plano. En el registro se aplica \texttt{generate\_password\_hash(password, method='scrypt')}. Durante el inicio de sesión se valida con \texttt{check\_password\_hash(hash\_almacenado, password\_plano)}.
+    \item \textbf{Gestión de Sesión con Flask-Login:} Se utiliza la clase \texttt{Usuario(UserMixin)} y el decorador \texttt{@login\_manager.user\_loader}, vinculando la sesión activa al identificador en base de datos.
+    \item \textbf{Protección Estricta de Rutas Privadas:} Todas las rutas de administración (\texttt{/dashboard}, \texttt{/productos}, \texttt{/clientes}, \texttt{/proveedores}, \texttt{/facturacion} y sus formularios) están decoradas con \texttt{@login\_required}.
+    \item \textbf{Redirección Automática:} Cuando un usuario no autorizado intenta escribir la URL directa de una página interna, Flask-Login intercepta la petición y redirige a \texttt{/login} con un mensaje preventivo.
+    \item \textbf{Cierre Seguro de Sesión:} La ruta \texttt{/logout} invoca \texttt{logout\_user()} destruyendo las cookies de sesión.
+\end{itemize}
+
+\screenshotbox{captura_03_login_rechazo.png}{Captura 3}{Intento de inicio de sesión con contraseña incorrecta mostrando el mensaje de alerta flash y rechazo de acceso.}
+
+\screenshotbox{captura_04_login_exitoso_dashboard.png}{Captura 4}{Inicio de sesión exitoso en el Dashboard, evidenciando el nombre del usuario activo (current\_user) en el Navbar y la opción de Cerrar sesión.}
+
+\screenshotbox{captura_05_bloqueo_ruta_protegida.png}{Captura 5}{Prueba de seguridad: Intento de acceso directo a /productos sin sesión activa y redirección inmediata hacia el formulario de login.}
+
+% ==============================================================================
+% SECCIÓN 4: OPERACIONES CRUD COMPLETAS
+% ==============================================================================
+\section{Implementación de Operaciones CRUD en la Interfaz}
+
+Se implementaron formularios con validación del lado del servidor para todas las operaciones:
+
+\subsection{Resumen de Endpoints CRUD}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Módulo} & \textbf{Operación} & \textbf{Método HTTP} & \textbf{Endpoint / Acción} \\
+\midrule
+\multirow{4}{*}{\textbf{Productos}} 
+ & Crear (Create) & POST & \texttt{/productos/nuevo} \\
+ & Leer (Read) & GET & \texttt{/productos} (con JOIN a proveedor) \\
+ & Actualizar (Update) & POST & \texttt{/productos/editar/<id>} \\
+ & Eliminar (Delete) & POST & \texttt{/productos/eliminar/<id>} \\
+\midrule
+\multirow{4}{*}{\textbf{Clientes}} 
+ & Crear & POST & \texttt{/clientes/nuevo} \\
+ & Leer & GET & \texttt{/clientes} \\
+ & Actualizar & POST & \texttt{/clientes/editar/<ruc>} \\
+ & Eliminar & POST & \texttt{/clientes/eliminar/<ruc>} \\
+\midrule
+\multirow{4}{*}{\textbf{Proveedores}} 
+ & Crear & POST & \texttt{/proveedores/nuevo} \\
+ & Leer & GET & \texttt{/proveedores} \\
+ & Actualizar & POST & \texttt{/proveedores/editar/<ruc>} \\
+ & Eliminar & POST & \texttt{/proveedores/eliminar/<ruc>} \\
+\midrule
+\multirow{4}{*}{\textbf{Facturación}} 
+ & Crear & POST & \texttt{/facturacion/nuevo} (con FK a cliente) \\
+ & Leer & GET & \texttt{/facturacion} \\
+ & Actualizar & POST & \texttt{/facturacion/editar/<numero>} \\
+ & Eliminar & POST & \texttt{/facturacion/eliminar/<numero>} \\
+\bottomrule
+\end{tabular}
+\caption{Matriz de operaciones CRUD implementadas con persistencia relacional.}
+\end{table}
+
+\screenshotbox{captura_06_crud_productos_tabla.png}{Captura 6}{Módulo de Productos mostrando la tabla responsiva con datos cargados desde PostgreSQL y botones de acción.}
+
+\screenshotbox{captura_07_formulario_producto_validado.png}{Captura 7}{Formulario de creación/edición de producto con validaciones Flask-WTF y selector dinámico de proveedores.}
+
+\screenshotbox{captura_08_crud_clientes_proveedores.png}{Captura 8}{Listado y gestión de Clientes / Proveedores con mensaje flash confirmando la creación o modificación de un registro.}
+
+\screenshotbox{captura_09_modulo_facturacion.png}{Captura 9}{Módulo de Facturación reflejando la relación con el cliente, desglose de subtotal, IVA y cálculo del total.}
+
+% ==============================================================================
+% SECCIÓN 5: DESPLIEGUE Y EVIDENCIAS DE REPOSITORIO
+% ==============================================================================
+\section{Control de Versiones y Despliegue en la Nube}
+
+\subsection{Repositorio Oficial de GitHub}
+El código completo del proyecto se encuentra disponible en el repositorio de la cuenta institucional:
+\begin{center}
+    \textbf{URL:} \url{https://github.com/anis1605/2626---DESARROLLO-DE-APLICACIONES-WEB----UEA-L-UFPTI-004}
+\end{center}
+El historial de commits refleja la progresión sistemática desde las validaciones de formularios (Semana 11), persistencia (Semana 12), integración relacional (Semana 13), autenticación segura (Semana 14), hasta el CRUD relacional en PostgreSQL y configuración de despliegue (Semana 15 y 16).
+
+\screenshotbox{captura_10_repositorio_github.png}{Captura 10}{Vista principal del repositorio en GitHub bajo la cuenta anis1605 con el archivo README.md institucional y la estructura en la raíz.}
+
+\screenshotbox{captura_11_github_pages_render.png}{Captura 11}{Publicación activa en GitHub Pages para visualización interactiva del frontend y/o servicio Web en Render.}
+
+% ==============================================================================
+% SECCIÓN 6: GUION PASO A PASO PARA LA DEFENSA (3 A 5 MINUTOS)
+% ==============================================================================
+\newpage
+\section{Guion Técnico para la Exposición y Defensa (3 a 5 Minutos)}
+
+\begin{tcolorbox}[colback=alertbg,colframe=alertborder,arc=2mm,title=\textbf{\color{brown}INSTRUCCIONES PARA LA DEFENSA}]
+Este guion está optimizado para la presentación en vivo (100\% de la calificación) o para la grabación del video demostrativo de 3 a 5 minutos.
+\end{tcolorbox}
+
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{Introducción y Arquitectura (0:00 -- 0:45 min):}
+    \begin{itemize}
+        \item \textit{``Buenos días estimado docente. Mi nombre es Clara Anahí González Apolo. A continuación presento la defensa final de mi Proyecto Integrador para la asignatura Desarrollo de Aplicaciones Web.''}
+        \item \textit{``El sistema desarrollado es una solución web para la ferretería 'El Tornillo Dorado', implementada con Python y Flask en el backend, PostgreSQL como base de datos relacional, Flask-Login para sesiones y Bootstrap 5 con diseño pastel en el frontend.''}
+    \end{itemize}
+
+    \item \textbf{Demostración de Autenticación y Seguridad (0:45 -- 1:45 min):}
+    \begin{itemize}
+        \item \textit{``En primer lugar demuestro el control de acceso. Si intento ingresar directamente por URL a la ruta \texttt{/productos}, el sistema intercepta la petición con el decorador \texttt{@login\_required} y me redirige obligatoriamente al login.''}
+        \item \textit{``Si ingreso una clave incorrecta, el sistema valida mediante \texttt{check\_password\_hash} y rechaza la autenticación mostrando un mensaje de error.''}
+        \item \textit{``Ahora inicio sesión con credenciales válidas (\texttt{admin} / \texttt{admin123}). El sistema crea la sesión con \texttt{login\_user}, nos redirige al Dashboard y en la barra de navegación se observa el usuario activo (\texttt{current\_user}) y el botón de Cerrar sesión.''}
+    \end{itemize}
+
+    \item \textbf{Base de Datos Relacional y Consultas con JOIN (1:45 -- 2:45 min):}
+    \begin{itemize}
+        \item \textit{``Nuestra base de datos en PostgreSQL cuenta con 5 tablas relacionadas: usuarios, proveedores, productos, clientes y facturas.''}
+        \item \textit{``En el módulo de Productos, observamos que cada material está vinculado a un proveedor mediante su RUC a través de una consulta \texttt{LEFT JOIN}. Esto permite mostrar la razón social del proveedor directamente en la tabla.''}
+    \end{itemize}
+
+    \item \textbf{Operaciones CRUD Completas (2:45 -- 4:00 min):}
+    \begin{itemize}
+        \item \textbf{Crear:} \textit{``Agrego un nuevo producto desde el formulario, selecciono el proveedor asociado y guardo. El sistema valida los campos con Flask-WTF y lo inserta con una consulta parametrizada.''}
+        \item \textbf{Leer:} \textit{``El producto aparece inmediatamente en la tabla general con su stock y precio.''}
+        \item \textbf{Actualizar:} \textit{``Edito el precio y stock del producto registrado; los cambios se guardan exitosamente mediante un \texttt{UPDATE}.''}
+        \item \textbf{Eliminar:} \textit{``Ejecuto la eliminación segura mediante una petición POST con \texttt{DELETE} y el registro desaparece.''}
+        \item \textit{``Este mismo ciclo CRUD se encuentra operativo en Clientes, Proveedores y Facturación.''}
+    \end{itemize}
+
+    \item \textbf{Cierre de Sesión y Conclusiones (4:00 -- 4:45 min):}
+    \begin{itemize}
+        \item \textit{``Finalmente, presiono 'Cerrar sesión'. La sesión se destruye con \texttt{logout\_user()}. Si intento retroceder o entrar a una ruta protegida, el acceso queda completamente bloqueado.''}
+        \item \textit{``El código completo se encuentra versionado en GitHub en mi cuenta anis1605 con su documentación técnica y despliegue activo. Muchas gracias.''}
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
